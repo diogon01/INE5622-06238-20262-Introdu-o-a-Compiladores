@@ -1,0 +1,34 @@
+digraph ex2 {
+  rankdir=LR; fontname="Helvetica"; node [fontname="Helvetica", shape=circle, width=0.5, fixedsize=true]; edge [fontname="Helvetica", fontsize=11];
+  label="Exercício 2 — IDENT, BRANCO, NI, NPF, OUTRO\n* = retrai forward 1 posição;  caractere sem aresta = falha: forward volta a lexemeBegin e tenta o próximo diagrama"; labelloc=t;
+  subgraph cluster_o { label="5º  OUTRO = qualquer caractere"; style=rounded;
+    io [shape=point, width=0.05]; io -> 14;
+    15 [shape=doublecircle]; 14 -> 15 [label="qualquer"];
+    ro [shape=plaintext, label="OUTRO", fixedsize=false]; 15 -> ro [style=dashed, arrowhead=none];
+  }
+  subgraph cluster_n { label="4º  NI = dígito dígito*"; style=rounded;
+    in [shape=point, width=0.05]; in -> 11;
+    11 -> 12 [label="dígito"]; 12 -> 12 [label="dígito"];
+    13 [shape=doublecircle, label="13*"]; 12 -> 13 [label="outro"];
+    rn [shape=plaintext, label="NI", fixedsize=false]; 13 -> rn [style=dashed, arrowhead=none];
+  }
+  subgraph cluster_f { label="3º  NPF = dígito dígito* . dígito dígito*"; style=rounded;
+    if [shape=point, width=0.05]; if -> 6;
+    6 -> 7 [label="dígito"]; 7 -> 7 [label="dígito"]; 7 -> 8 [label="ponto ( . )"];
+    8 -> 9 [label="dígito"]; 9 -> 9 [label="dígito"];
+    10 [shape=doublecircle, label="10*"]; 9 -> 10 [label="outro"];
+    rf [shape=plaintext, label="NPF", fixedsize=false]; 10 -> rf [style=dashed, arrowhead=none];
+  }
+  subgraph cluster_i { label="2º  IDENT = letra (letra | dígito)*"; style=rounded;
+    ii [shape=point, width=0.05]; ii -> 3;
+    3 -> 4 [label="letra"]; 4 -> 4 [label="letra, dígito"];
+    5 [shape=doublecircle, label="5*"]; 4 -> 5 [label="outro"];
+    ri [shape=plaintext, label="IDENT", fixedsize=false]; 5 -> ri [style=dashed, arrowhead=none];
+  }
+  subgraph cluster_b { label="1º  BRANCO = delim delim*"; style=rounded;
+    ib [shape=point, width=0.05]; ib -> 0 [label="início"];
+    0 -> 1 [label="delim"]; 1 -> 1 [label="delim"];
+    2 [shape=doublecircle, label="2*"]; 1 -> 2 [label="outro"];
+    rb [shape=plaintext, label="BRANCO\n(descartado)", fixedsize=false]; 2 -> rb [style=dashed, arrowhead=none];
+  }
+}

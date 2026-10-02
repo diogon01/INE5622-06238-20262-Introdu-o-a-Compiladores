@@ -1,0 +1,23 @@
+digraph ex1 {
+  rankdir=LR; fontname="Helvetica"; node [fontname="Helvetica", shape=circle, width=0.5, fixedsize=true]; edge [fontname="Helvetica", fontsize=11];
+  label="Exercício 1 — IDENT, BRANCO, OUTRO\n* = retrai forward 1 posição;  falha = forward volta a lexemeBegin e tenta o próximo diagrama"; labelloc=t;
+  subgraph cluster_b { label="1º  BRANCO = delim delim*"; style=rounded;
+    ib [shape=point, width=0.05]; ib -> 0 [label="início"];
+    0 -> 1 [label="delim"]; 1 -> 1 [label="delim"];
+    2 [shape=doublecircle, label="2*"]; 1 -> 2 [label="outro"];
+    rb [shape=plaintext, label="retorna BRANCO\n(descartado)", fixedsize=false]; 2 -> rb [style=dashed, arrowhead=none];
+  }
+  subgraph cluster_i { label="2º  IDENT = letra (letra | dígito)*"; style=rounded;
+    ii [shape=point, width=0.05]; ii -> 3;
+    3 -> 4 [label="letra"]; 4 -> 4 [label="letra, dígito"];
+    5 [shape=doublecircle, label="5*"]; 4 -> 5 [label="outro"];
+    ri [shape=plaintext, label="retorna IDENT", fixedsize=false]; 5 -> ri [style=dashed, arrowhead=none];
+  }
+  subgraph cluster_o { label="3º  OUTRO = qualquer caractere"; style=rounded;
+    io [shape=point, width=0.05]; io -> 6;
+    7 [shape=doublecircle]; 6 -> 7 [label="qualquer"];
+    ro [shape=plaintext, label="retorna OUTRO", fixedsize=false]; 7 -> ro [style=dashed, arrowhead=none];
+  }
+  f1 [shape=plaintext, label="falha", fixedsize=false]; 0 -> f1 [style=dotted, label="não delim"]; f1 -> 3 [style=dotted];
+  f2 [shape=plaintext, label="falha", fixedsize=false]; 3 -> f2 [style=dotted, label="não letra"]; f2 -> 6 [style=dotted];
+}

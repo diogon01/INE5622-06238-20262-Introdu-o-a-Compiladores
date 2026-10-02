@@ -1,0 +1,5 @@
+def f () {
+  int a;
+  a = 5 + 3.9;
+  return;
+}
